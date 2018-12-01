@@ -419,6 +419,11 @@ def create_whole_song(album_name):
     if os.path.exists(song_path):
         song_name = song_name + " (Part 2)"
 
+    # Verse 2 will feature a rapper as ever hit needs someone else to spit bars
+    feat_list = ('Kanye West', 'Nicki Minaj', 'Bobby Shmurder', 'A Boogie Wit Da Hoodie', 'Gunna', 'Trife Drew',
+                 'DJ Spinking', 'Torey Lanez', 'Murda Beats', 'Fetty Wap', 'Young Thug')
+    feat = random.choice(feat_list)
+
     # Write the song out to a file
     with open(album_name + "/" + song_name + '.txt', 'a') as the_file:
         the_file.write(ascii)
@@ -453,7 +458,7 @@ def create_whole_song(album_name):
         the_file.write('\n')
         the_file.write(dash)
         the_file.write('\n')
-        the_file.write('VERSE TWO:')
+        the_file.write('VERSE TWO' + ' (' + feat + '):')
         the_file.write('\n')
         the_file.write(dash)
         the_file.write('\n')
