@@ -4,9 +4,9 @@ import json
 import markovify
 import os
 
-artist_one = 'Skepta'
-artist_two = 'Stevie Wonder'
-num_songs = 5
+artist_one = 'Coldplay'
+artist_two = 'Avicii'
+num_songs = 10
 
 dash = '-'*60
 
