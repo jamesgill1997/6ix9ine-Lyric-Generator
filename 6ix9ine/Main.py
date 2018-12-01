@@ -100,6 +100,19 @@ def create_song_name():
     return songname
 
 
+def create_album_name():
+    # Function to create the album name
+    # Will be a random noun from the 50 most common nouns in the English language with 69 appended
+    nouns = ('Area', 'Book', 'Business', 'Case', 'Child', 'Company', 'Country', 'Day', 'Eye', 'Fact', 'Family',
+             'Government', 'Group', 'Hand', 'Home', 'Job', 'Life', 'Lot', 'Man', 'Money', 'Month', 'Mother',
+             'Mr', 'Night', 'Number', 'Part', 'People', 'Place', 'Point', 'Problem', 'Program', 'Question', 'Right',
+             'Room', 'School', 'State', 'Story', 'Student', 'Study', 'System', 'Thing', 'Time', 'Water', 'Way',
+             'Week', 'Woman', 'Word', 'Work', 'World', 'Year')
+    album_name = random.choice(nouns) + " 69"
+
+    return album_name
+
+
 def create_intro():
     # Function to create the introduction to our song
 
@@ -364,10 +377,10 @@ def create_outro():
     return outro_list
 
 
-def create_finished_song():
+def create_whole_song(album_name):
     # Function to put together all the elements for your finished 6ix9ine Masterpiece
     ascii = create_ascii_art()
-    songname = create_song_name()
+    song_name = create_song_name()
     song_intro = create_intro()
     v1, v2, chorus = create_song_verses_chorus()
     outro = create_outro()
@@ -375,13 +388,22 @@ def create_finished_song():
     # Add dividing line
     dash = '-' * 20
 
+    # TODO: TEMP FOLDER NAME
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    if not os.path.exists(album_name):
+        os.makedirs(album_name)
+
+    song_path = os.path.dirname(os.path.realpath(__file__)) + "/" + album_name + "/" + song_name + ".txt"
+    if os.path.exists(song_path):
+        song_name = song_name + " (Part 2)"
+
     # Write the song out to a file
-    with open(songname + '.txt', 'a') as the_file:
+    with open(album_name + "/" + song_name + '.txt', 'a') as the_file:
         the_file.write(ascii)
         the_file.write('\n')
         the_file.write(dash)
         the_file.write('\n')
-        the_file.write('SONG NAME: ' + songname)
+        the_file.write('SONG NAME: ' + song_name)
         the_file.write('\n')
         the_file.write(dash)
         the_file.write('\n')
@@ -422,4 +444,6 @@ def create_finished_song():
         the_file.write('\n'.join(outro))
 
 
-create_finished_song()
+album_name = create_album_name()
+for i in range(7):
+    create_whole_song(album_name)
