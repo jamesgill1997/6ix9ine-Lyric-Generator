@@ -401,8 +401,25 @@ def create_outro():
 
 def create_whole_song(album_name):
     # Function to put together all the elements for your finished 6ix9ine Masterpiece
+
+    # Verse 2 will feature a rapper as ever hit needs someone else to spit bars
+    feat_list = ('Kanye West', 'Nicki Minaj', 'Bobby Shmurder', 'A Boogie Wit Da Hoodie', 'Gunna', 'Trife Drew',
+                 'DJ Spinking', 'Torey Lanez', 'Murda Beats', 'Fetty Wap', 'Young Thug')
+    number = random.randint(0, 100)
+
+    feat_artist = False
+    if number < 30:
+        feat_artist = True
+
+    if feat_artist:
+        feat = random.choice(feat_list)
+
     ascii = create_ascii_art()
-    song_name = create_song_name()
+    if feat_artist:
+        song_name = create_song_name() + ' (feat ' + feat + ')'
+    else:
+        song_name = create_song_name()
+
     song_intro = create_intro()
     v1, v2, chorus = create_song_verses_chorus()
     outro = create_outro()
@@ -410,7 +427,6 @@ def create_whole_song(album_name):
     # Add dividing line
     dash = '-' * 20
 
-    # TODO: TEMP FOLDER NAME
     dir_path = os.path.dirname(os.path.realpath(__file__))
     if not os.path.exists(album_name):
         os.makedirs(album_name)
@@ -418,11 +434,6 @@ def create_whole_song(album_name):
     song_path = os.path.dirname(os.path.realpath(__file__)) + "/" + album_name + "/" + song_name + ".txt"
     if os.path.exists(song_path):
         song_name = song_name + " (Part 2)"
-
-    # Verse 2 will feature a rapper as ever hit needs someone else to spit bars
-    feat_list = ('Kanye West', 'Nicki Minaj', 'Bobby Shmurder', 'A Boogie Wit Da Hoodie', 'Gunna', 'Trife Drew',
-                 'DJ Spinking', 'Torey Lanez', 'Murda Beats', 'Fetty Wap', 'Young Thug')
-    feat = random.choice(feat_list)
 
     # Write the song out to a file
     with open(album_name + "/" + song_name + '.txt', 'a') as the_file:
@@ -458,7 +469,10 @@ def create_whole_song(album_name):
         the_file.write('\n')
         the_file.write(dash)
         the_file.write('\n')
-        the_file.write('VERSE TWO' + ' (' + feat + '):')
+        if feat_artist:
+            the_file.write('VERSE TWO' + ' (' + feat + '):')
+        else:
+            the_file.write('VERSE TWO:')
         the_file.write('\n')
         the_file.write(dash)
         the_file.write('\n')
