@@ -29,7 +29,7 @@ import os
 #  \______/  \______/  \______/ |__/     |__/     \______/ |__/  |__/|__/  \__/ \______/
 
 
-def print_ascii_art():
+def create_ascii_art():
     # Function to add sick ascii art in the console
     treyway = ("""\
      /$$$$$$$$ /$$$$$$$   /$$$$$$  /$$     /$$ /$$      /$$  /$$$$$$  /$$     /$$
@@ -82,7 +82,7 @@ def print_ascii_art():
      \______/  \______/ |__/  |__/|__/     |__/ \______/ |__/  |__/|_______/ |________/|__/  |__/
                 """)
     ascii_options = (treyway, scumgang, gangshit, splishsplash, schmurder)
-    print(random.choice(ascii_options))
+    return random.choice(ascii_options)
 
 
 def create_song_name():
@@ -340,7 +340,7 @@ def create_outro():
         "I can't sleep, I can't sleep",
         "Bitch, I'm stressin', oh, bitch, I'm stressin'",
         "Why you tweet my shit?",
-        "DVDs, porno tapes"
+        "DVDs, porno tapes",
         "Do you beat your meat to a porno tape?",
         "Watch his body Milly Rock, yeah"
     ]
@@ -366,6 +366,7 @@ def create_outro():
 
 def create_finished_song():
     # Function to put together all the elements for your finished 6ix9ine Masterpiece
+    ascii = create_ascii_art()
     songname = create_song_name()
     song_intro = create_intro()
     v1, v2, chorus = create_song_verses_chorus()
@@ -374,29 +375,51 @@ def create_finished_song():
     # Add dividing line
     dash = '-' * 20
 
-    # Prints the song
-    print('SONG NAME: ' + songname)
-    print(dash)
-    print('INTRO:')
-    print(dash)
-    print('\n'.join(song_intro))
-    print('\n')
-    print('VERSE ONE:')
-    print(dash)
-    print('\n'.join(v1))
-    print('\n')
-    print('CHORUS:')
-    print(dash)
-    print('\n'.join(chorus))
-    print('\n')
-    print('VERSE TWO:')
-    print(dash)
-    print('\n'.join(v2))
-    print('\n')
-    print('OUTRO:')
-    print(dash)
-    print('\n'.join(outro))
+    # Write the song out to a file
+    with open(songname + '.txt', 'a') as the_file:
+        the_file.write(ascii)
+        the_file.write('\n')
+        the_file.write(dash)
+        the_file.write('\n')
+        the_file.write('SONG NAME: ' + songname)
+        the_file.write('\n')
+        the_file.write(dash)
+        the_file.write('\n')
+        the_file.write('INTRO:')
+        the_file.write('\n')
+        the_file.write(dash)
+        the_file.write('\n')
+        the_file.write('\n'.join(song_intro))
+        the_file.write('\n')
+        the_file.write(dash)
+        the_file.write('\n')
+        the_file.write('VERSE ONE:')
+        the_file.write('\n')
+        the_file.write(dash)
+        the_file.write('\n')
+        the_file.write('\n'.join(v1))
+        the_file.write('\n')
+        the_file.write(dash)
+        the_file.write('\n')
+        the_file.write('CHORUS:')
+        the_file.write('\n')
+        the_file.write(dash)
+        the_file.write('\n')
+        the_file.write('\n'.join(chorus))
+        the_file.write('\n')
+        the_file.write(dash)
+        the_file.write('\n')
+        the_file.write('VERSE TWO:')
+        the_file.write('\n')
+        the_file.write(dash)
+        the_file.write('\n')
+        the_file.write('\n'.join(v2))
+        the_file.write('\n')
+        the_file.write('OUTRO:')
+        the_file.write('\n')
+        the_file.write(dash)
+        the_file.write('\n')
+        the_file.write('\n'.join(outro))
 
 
-print_ascii_art()
 create_finished_song()
