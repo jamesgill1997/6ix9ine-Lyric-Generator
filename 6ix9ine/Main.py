@@ -307,8 +307,34 @@ def create_song_verses_chorus():
     return v1_list, v2_list, chorus_list
 
 
-def createOutro():
+def create_outro():
     # Function to create the song outros
+
+    # List of outro lines
+    outro = [
+        "Hold up, hold up, hold up, gang",
+        "Run that shit back",
+        "You ain't my bitch, nah",
+        "It's fuckin' Target",
+        "It's fuckin' Trojan",
+        "Little thottie, got her rowdy, choosing everybody",
+        "Yo, chill, chill, chill, chill, chill, woah, woah, woah",
+        "Now stop",
+        "You cannot say that, bro, c'mon",
+        "Lately, I been on some 'suck my dick' shit",
+        "I can't sleep, I can't sleep",
+        "Bitch, I'm stressin', oh, bitch, I'm stressin'",
+        "Why you tweet my shit?",
+        "DVDs, porno tapes"
+        "Do you beat your meat to a porno tape?",
+        "Watch his body Milly Rock, yeah"
+    ]
+
+    # Replaces all instances of the n word with a more family friendly alternative
+    outro = [v.replace('niggas', 'n****s') for v in outro]
+    outro = [v.replace('nigga', 'n****') for v in outro]
+    outro = [v.replace('Niggas', 'n****s') for v in outro]
+    outro = [v.replace('Nigga', 'n****s') for v in outro]
 
     # Creates an empty outro list
     outro_list = []
