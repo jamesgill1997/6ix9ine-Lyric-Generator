@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Random Song Generator</title>
+  </head>  
+  <body>
+    <div class="main">
+      <h1>Random Song Generator</h1>
+      <p text-align="center">
+        wanna spit <strong>HARD BARZ</strong> like 6IX 9INE? Choose your
+        artist style in the box below and wait for the barz to be printed on screen!
+      </p>
+      
+        <form onsubmit="return getValue('commands')">
+        <input type="text" name="commands" size="60" id="commands"/>
+          <input type="submit" value="Submit">
+    </form> 
+    </div>
+  <script>
+    function getValue (id) {
+    text = document.getElementById(id).value; //value of the text input
+    alert("The artist chosen was: " +text);
+    return false;
+}
+    </script>
+    
+  </body>
+</html>
