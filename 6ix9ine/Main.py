@@ -478,6 +478,8 @@ def create_whole_song(album_name):
         the_file.write('\n')
         the_file.write('\n'.join(v2))
         the_file.write('\n')
+        the_file.write(dash)
+        the_file.write('\n')
         the_file.write('OUTRO:')
         the_file.write('\n')
         the_file.write(dash)
