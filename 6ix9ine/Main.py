@@ -157,6 +157,172 @@ def create_intro():
     return intro_list
 
 
+def create_song_verses_chorus():
+    # Function to create the verses and the chorus
+
+    # List of adlibs
+    adlibs = [
+        "(Stupid)",
+        "(Stoopid)",
+        "(You don't wanna die)",
+        "(Ooh)",
+        "(Mmm)",
+        "(Mi baby; uah, uah)",
+        "(Lo-loca-loca)",
+        "(Hot)",
+        "(Hey Michael)",
+        "(Pop)",
+        "(Hey!)",
+        "(On the dick, hey!)",
+        "(YEET)"
+    ]
+
+    # Replaces all instances of the n word with a more family friendly alternative
+    adlibs = [v.replace('niggas', 'n****s') for v in adlibs]
+    adlibs = [v.replace('nigga', 'n****') for v in adlibs]
+    adlibs = [v.replace('Niggas', 'n****s') for v in adlibs]
+    adlibs = [v.replace('Nigga', 'n****s') for v in adlibs]
+
+    # List of verse lines
+    verses = [
+        "Bitch, I'm silly",
+        "Spin a hoop, who the fuck is you?",
+        "Niggas killed your cousin, you want smoke, nigga? Glo nigga, rollin' up your cousin in a blunt, nigga",
+        "Bozo, bitch, are you dumb-d-dumb-dumb-dumb-d-dumb-dumb-dumb?",
+        "I be stealin', I be robbin', I be lootin'",
+        "Tell him shut up, suck a dick",
+        "Your baby daddy mixtape wasn't shit, he a bitch",
+        "Free Bobby, free Rowdy, free Cueno, free the 9",
+        "Pussy got that wet, wet, got that drip, drip",
+        "She eat my dick like it's free, free",
+        "Bend her down then I make it clap, clap, clap",
+        "Draco got that kick-back when I blow that, they all do track",
+        "You get hit, I do not miss shots",
+        "I got them big rocks in my ear, nuggets",
+        "Saks Off Fifth, I'm with your bitch",
+        "Hit it in the back of the Jeep-Jeep",
+        "I do my own shit, I don’t need 50 niggas to roll with",
+        "Kick her out, I'm gettin' money now, actin' funny now"
+        "I send her in the pool even though I'm rich as shit",
+        "Tiki Taki, Spanish mami, she a hot tamale",
+        "Drug dealer, professional pot-whipper",
+        "She want me, I ain't want her, ooh",
+        "Broke niggas, go stand over there",
+        "Fake ass hoes, go meet 'em over there",
+        "Back at it like a mothafuckin' crack addict",
+        "Drop down and pick your weave up, girl",
+        "You know them chicken-heads eat it up, girl",
+        "Sex addict, I'm a mothafuckin' sex addict",
+        "That pussy get wetter than yours",
+        "Just bought a piece of Fashion Nova. Your girlfriend look like a ogre",
+        "Real fly, yellow Prada socks, Bumblebee, huh",
+        "The streets so cold, gotta ride wit' a pole",
+        "Loaded Glock, lettin' that thing pop , they can't freeze us",
+        "Glock .30, hollow tips",
+        "These bitches think I'm stupid, I ain't stupid",
+        "Like a Smackdown, rock bottom I'ma pin her down",
+        "Licky-licky, licky on my blicky, uh",
+        "Bitch, you used to fuckin' leave me on seen and shit",
+        "Stupid lil' dumb nigga, now you on YouTube",
+        "Police pull up on you, you gon' get to yappin'",
+        "Scope with a zoom, fuck around and boom, homie",
+        "Yeah that's a blackout, get dragged out and packed out",
+        "Shorty, don’t clap-back on the dick",
+        "Don’t clap-back on the dick",
+        "Bust it down, the Rollie, now she tryna fuck",
+        "Sending shots to his body, make him sing like Ozuna",
+        "Blocked blocks, sent shots"
+    ]
+
+    # Replaces all instances of the n word with a more family friendly alternative
+    verses = [v.replace('niggas', 'n****s') for v in verses]
+    verses = [v.replace('nigga', 'n****') for v in verses]
+    verses = [v.replace('Niggas', 'n****s') for v in verses]
+    verses = [v.replace('Nigga', 'n****s') for v in verses]
+
+    # Creates empty list the verses, and chorus
+    v1_list = []
+    v2_list = []
+    chorus_list = []
+
+    # Generate basic list:
+    while len(v1_list) < 6:
+        lyric_v1 = random.choice(verses)
+
+        if lyric_v1 not in v1_list:
+            v1_list.append(lyric_v1)
+
+    while len(v2_list) < 6:
+        lyric_v2 = random.choice(verses)
+
+        if lyric_v2 not in v1_list and lyric_v2 not in v2_list:
+            v2_list.append(lyric_v2)
+
+    while len(chorus_list) < 6:
+        lyric_chorus = random.choice(verses)
+
+        if lyric_chorus not in v1_list and lyric_chorus not in v2_list and lyric_chorus not in chorus_list:
+            chorus_list.append(lyric_chorus)
+
+    # Add adlibs:
+    numadlibs_v1 = random.randint(0, len(v1_list))
+    numadlibs_v2 = random.randint(0, len(v2_list))
+    numadlibs_chorus = random.randint(0, len(chorus_list))
+
+    # Creates verse and chorus appended lists
+    v1_lines_appended = []
+    v2_lines_appended = []
+    chorus_lines_appended = []
+
+    for i in range(numadlibs_v1):
+
+        lineappend_v1 = random.randint(0, len(v1_list) - 1)
+
+        if lineappend_v1 not in v1_lines_appended:
+            v1_lines_appended.append(lineappend_v1)
+
+            adlib_app = random.choice(adlibs)
+            v1_list[lineappend_v1] += ' ' + adlib_app
+
+    for j in range(numadlibs_v2):
+
+        lineappend_v2 = random.randint(0, len(v2_list) - 1)
+
+        if lineappend_v2 not in v2_lines_appended:
+            v2_lines_appended.append(lineappend_v2)
+
+            adlib_app = random.choice(adlibs)
+            v2_list[lineappend_v2] += ' ' + adlib_app
+
+    for k in range(numadlibs_chorus):
+
+        lineappend_chorus = random.randint(0, len(chorus_list) - 1)
+
+        if lineappend_chorus not in chorus_lines_appended:
+            chorus_lines_appended.append(lineappend_chorus)
+
+            adlib_app = random.choice(adlibs)
+            chorus_list[lineappend_chorus] += ' ' + adlib_app
+
+    return v1_list, v2_list, chorus_list
+
+
+def createOutro():
+    # Function to create the song outros
+
+    # Creates an empty outro list
+    outro_list = []
+
+    while len(outro_list) < 3:
+
+        lyric_app = random.choice(outro)
+
+        if lyric_app not in outro_list:
+            outro_list.append(lyric_app)
+
+    return outro_list
+
+
 def create_finished_song():
     # Function to put together all the elements for your finished 6ix9ine Masterpiece
     create_song_name()
