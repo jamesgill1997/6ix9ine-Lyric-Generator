@@ -85,6 +85,21 @@ def print_ascii_art():
     print(random.choice(ascii_options))
 
 
+def create_song_name():
+    # Function to make the song title
+    # 4 letter words, all caps, consonants characters 1 and 3, vowels 2 and 4, vowels same on both
+    # Populating lists of consonants and vowels
+    consonants = (
+    "B", "C", "D", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z")
+    vowels = ("A", "E", "I", "O", "U")
+
+    # Create the song name
+    repeated_vowel = random.choice(vowels)
+    songname = random.choice(consonants) + repeated_vowel + random.choice(consonants) + repeated_vowel
+
+    return songname
+
+
 def create_intro():
     # Function to create the introduction to our song
 
@@ -201,7 +216,7 @@ def create_song_verses_chorus():
         "I got them big rocks in my ear, nuggets",
         "Saks Off Fifth, I'm with your bitch",
         "Hit it in the back of the Jeep-Jeep",
-        "I do my own shit, I don’t need 50 niggas to roll with",
+        "I do my own shit, I dont need 50 niggas to roll with",
         "Kick her out, I'm gettin' money now, actin' funny now"
         "I send her in the pool even though I'm rich as shit",
         "Tiki Taki, Spanish mami, she a hot tamale",
@@ -227,8 +242,8 @@ def create_song_verses_chorus():
         "Police pull up on you, you gon' get to yappin'",
         "Scope with a zoom, fuck around and boom, homie",
         "Yeah that's a blackout, get dragged out and packed out",
-        "Shorty, don’t clap-back on the dick",
-        "Don’t clap-back on the dick",
+        "Shorty dont clap back on the dick",
+        "Dont clap back on the dick",
         "Bust it down, the Rollie, now she tryna fuck",
         "Sending shots to his body, make him sing like Ozuna",
         "Blocked blocks, sent shots"
@@ -351,21 +366,36 @@ def create_outro():
 
 def create_finished_song():
     # Function to put together all the elements for your finished 6ix9ine Masterpiece
-    create_song_name()
-    create_intro()
+    songname = create_song_name()
+    song_intro = create_intro()
+    v1, v2, chorus = create_song_verses_chorus()
+    outro = create_outro()
 
+    # Add dividing line
+    dash = '-' * 20
 
-def create_song_name():
-    # Function to make the song title
-    # 4 letter words, all caps, consonants characters 1 and 3, vowels 2 and 4, vowels same on both
-    # Populating lists of consonants and vowels
-    consonants = ("B", "C", "D", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z")
-    vowels = ("A", "E", "I", "O", "U")
-
-    # Create the song name
-    repeated_vowel = random.choice(vowels)
-    songname = random.choice(consonants) + repeated_vowel + random.choice(consonants) + repeated_vowel
-    print("Your song title is: \"" + songname + "\"")
+    # Prints the song
+    print('SONG NAME: ' + songname)
+    print(dash)
+    print('INTRO:')
+    print(dash)
+    print('\n'.join(song_intro))
+    print('\n')
+    print('VERSE ONE:')
+    print(dash)
+    print('\n'.join(v1))
+    print('\n')
+    print('CHORUS:')
+    print(dash)
+    print('\n'.join(chorus))
+    print('\n')
+    print('VERSE TWO:')
+    print(dash)
+    print('\n'.join(v2))
+    print('\n')
+    print('OUTRO:')
+    print(dash)
+    print('\n'.join(outro))
 
 
 print_ascii_art()
