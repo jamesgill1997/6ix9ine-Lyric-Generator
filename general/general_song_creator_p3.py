@@ -21,6 +21,16 @@ while num_artists > 0:
     num_artists = num_artists - 1
     i = i + 1
 
+# Choosing the number of songs to use when creating the new songs
+num_songs_used = int(input("How many songs should be used to create the new songs?"))
+
+dash = '-'*60
+
+# Finding songs by the chosen artists
+api = genius.Genius('uDarA9_cUEi8NgSiEliFR8Lu-TRl-sanYEfw1_fDNLRyejlgXDul2-QfYJZ4SvQF')
+
+# Use a dictionary
+
 #######################################################################################################################
 #######################################################################################################################
 #######################################################################################################################
@@ -30,7 +40,6 @@ artist_one = '21 Savage'
 artist_two = 'Drake'
 num_songs = 10
 
-dash = '-'*60
 
 # Finding Songs by Artist
 
