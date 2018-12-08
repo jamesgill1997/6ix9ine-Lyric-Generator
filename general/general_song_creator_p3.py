@@ -43,18 +43,26 @@ for i in artists:
         obj = json.load(fp)
         json_list.append(obj)
 
-# Saving all the lyrics into one file
+# Saving artists lyrics to separate files
+file_list = []
 for count, i in enumerate(json_list):
     with open('all_lyrics_' + str(count) + '.txt', 'a') as the_file:
         for j in range(len(i['songs'])):
             the_file.write(i['songs'][j]['lyrics'])
+    file_list.append('all_lyrics_' + str(i))
+
+# Opening text files - opens with type: <class '_io.TextIOWrapper'>
+open_files = {}
+for count, i in enumerate(file_list):
+    open_files['text_{}'.format(count)] = open('all_lyrics_' + str(count) + '.txt')
+
 
 #######################################################################################################################
 #######################################################################################################################
 #######################################################################################################################
 
 
-artist_one = '21 Savage'
+artist_one = 'Kanye West'
 artist_two = 'Drake'
 num_songs = 10
 
