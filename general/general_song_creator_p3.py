@@ -44,15 +44,10 @@ for i in artists:
         json_list.append(obj)
 
 # Saving all the lyrics into one file
-for i in json_list:
-    with open('all_lyrics_1' + '.txt', 'a') as the_file:
+for count, i in enumerate(json_list):
+    with open('all_lyrics_' + str(count) + '.txt', 'a') as the_file:
         for j in range(len(i['songs'])):
             the_file.write(i['songs'][j]['lyrics'])
-
-
-with open('all_lyrics_1' + '.txt', 'a') as the_file:
-    for i in range(len(obj_1['songs'])):
-        the_file.write(obj_1['songs'][i]['lyrics'])
 
 #######################################################################################################################
 #######################################################################################################################
