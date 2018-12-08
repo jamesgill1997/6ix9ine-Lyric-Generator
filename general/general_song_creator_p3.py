@@ -26,10 +26,33 @@ num_songs_used = int(input("How many songs should be used to create the new song
 
 dash = '-'*60
 
-# Finding songs by the chosen artists
+# Finding songs by the chosen artists using the genius api
 api = genius.Genius('uDarA9_cUEi8NgSiEliFR8Lu-TRl-sanYEfw1_fDNLRyejlgXDul2-QfYJZ4SvQF')
+artist_api = {}
+for i in range(len(artists)):
+    artist_api[artists[i]] = api.search_artist(artists[i], max_songs=num_songs_used)
 
-# Use a dictionary
+# Saving the lyrics for the chosen artists and number of songs as a json file
+for key, value in artist_api.items():
+    artist_api[key].save_lyrics()
+
+# Loading the json into memory as a variable
+json_list = []
+for i in artists:
+    with open('Lyrics_{}.json'.format(i.replace(' ','')), 'r') as fp:
+        obj = json.load(fp)
+        json_list.append(obj)
+
+# Saving all the lyrics into one file
+for i in json_list:
+    with open('all_lyrics_1' + '.txt', 'a') as the_file:
+        for j in range(len(i['songs'])):
+            the_file.write(i['songs'][j]['lyrics'])
+
+
+with open('all_lyrics_1' + '.txt', 'a') as the_file:
+    for i in range(len(obj_1['songs'])):
+        the_file.write(obj_1['songs'][i]['lyrics'])
 
 #######################################################################################################################
 #######################################################################################################################
