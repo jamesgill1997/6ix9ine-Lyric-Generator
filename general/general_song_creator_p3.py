@@ -2,10 +2,20 @@ import lyricsgenius as genius
 import json
 import markovify
 import os
+import shutil
 
+## LONG TERM
 # TODO replace lyricsgenius with Genius' API + web scraper
 # TODO implement flask wrapper to provide inputs
 # TODO more front end development
+
+## SHORT TERM
+# TODO Look into how to make file paths cleaner
+# TODO Need to make user input for whether they want a mixture of artists in one go, or just as features
+
+# Generate folder to store temporary files
+if not os.path.exists('tmp_files'):
+    os.makedirs('tmp_files')
 
 # Allowing user inputs to decide how many artists will be used when making the album
 num_artists = int(input("How many artists to combine?"))
@@ -31,19 +41,20 @@ for i in range(len(artists)):
 
 # Saving the lyrics for the chosen artists and number of songs as a json file
 for key, value in artist_api.items():
-    artist_api[key].save_lyrics()
+    tmp_path = os.path.dirname(os.path.realpath(__file__)) + '/tmp_files/Lyrics_{}'.format(str(key).replace(' ', ''))
+    artist_api[key].save_lyrics(filename = tmp_path)
 
 # Loading the json into memory as a variable
 json_list = []
 for i in artists:
-    with open('Lyrics_{}.json'.format(i.replace(' ','')), 'r') as fp:
+    with open(os.path.dirname(os.path.realpath(__file__)) + '/tmp_files/Lyrics_{}.json'.format(i.replace(' ','')), 'r') as fp:
         obj = json.load(fp)
         json_list.append(obj)
 
 # Saving artists lyrics to separate files
 file_list = []
 for count, i in enumerate(json_list):
-    with open('all_lyrics_' + str(count) + '.txt', 'a') as the_file:
+    with open(os.path.dirname(os.path.realpath(__file__)) + '/tmp_files/all_lyrics_' + str(count) + '.txt', 'a') as the_file:
         for j in range(len(i['songs'])):
             the_file.write(i['songs'][j]['lyrics'])
     file_list.append('all_lyrics_' + str(i))
@@ -51,7 +62,7 @@ for count, i in enumerate(json_list):
 # Opening text files - opens with type: <class '_io.TextIOWrapper'>
 open_files = []
 for count, i in enumerate(file_list):
-    open_files.append(open('all_lyrics_' + str(count) + '.txt'))
+    open_files.append(open(os.path.dirname(os.path.realpath(__file__)) + '/tmp_files/all_lyrics_' + str(count) + '.txt'))
 
 # Creates markov chain models for each of the open files
 markov_models = {}
@@ -59,7 +70,6 @@ for count, i in enumerate(open_files):
     markov_models['model_{}'.format(count)] = markovify.NewlineText(i, state_size=2)
 
 # Combines all markov chains
-# TODO Need to make user input for whether they want a mixture of artists in one go, or just as features
 combined_model = markovify.combine(list(markov_models.values()))
 
 
@@ -92,7 +102,6 @@ for i in range(num_songs_album):
             the_file.write('\n')
 
         the_file.write('\n')
-
         the_file.write('VERSE TWO')
         the_file.write('\n')
         the_file.write(dash)
@@ -112,3 +121,6 @@ for i in range(num_songs_album):
         for i in range(4):
             the_file.write(combined_model.make_sentence(tries=150))
             the_file.write('\n')
+
+# Remove unnecessary files genereated
+shutil.rmtree(os.path.dirname(os.path.realpath(__file__)) + '/tmp_files/')
