@@ -58,12 +58,11 @@ for count, i in enumerate(file_list):
 
 # Creates markov chain models for each of the open files
 markov_models = {}
-list_models = []
 for count, i in enumerate(open_files):
     markov_models['model_{}'.format(count)] = markovify.NewlineText(i, state_size=2)
 
 # Combines all markov chains
-# TODO Need to make user input for whether they want a mixturer of artists in one go, or just as features
+# TODO Need to make user input for whether they want a mixture of artists in one go, or just as features
 combined_model = markovify.combine(list(markov_models.values()))
 
 
