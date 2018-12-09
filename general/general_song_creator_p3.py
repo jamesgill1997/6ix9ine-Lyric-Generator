@@ -12,14 +12,11 @@ num_artists = int(input("How many artists to combine?"))
 
 # Initialising variables and lists
 artists = []
-i = 0
 
 # Adding user inputted artists to a list of size num_artists
-while num_artists > 0:
-    current_artist = i + 1
-    artists.append(input("Who is artist " + str(current_artist) + "?"))
-    num_artists = num_artists - 1
-    i = i + 1
+for i in range(num_artists):
+    artists.append(input("Who is artist " + str(i+1) + "?"))
+
 
 # Choosing the number of songs to use when creating the new songs
 num_songs_used = int(input("How many songs should be used to create the new songs?"))
@@ -70,8 +67,7 @@ combined_model = markovify.combine(list(markov_models.values()))
 
 # Asks for inputs regarding the album
 album_name = input('What is the album name: ')
-num_songs_album = input('How many songs in the album: ')
-
+num_songs_album = int(input('How many songs in the album: '))
 # Checks if the album already exists or not
 album_bool = True
 while album_bool:
