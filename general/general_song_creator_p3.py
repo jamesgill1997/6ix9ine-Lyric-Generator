@@ -52,9 +52,14 @@ for count, i in enumerate(json_list):
     file_list.append('all_lyrics_' + str(i))
 
 # Opening text files - opens with type: <class '_io.TextIOWrapper'>
-open_files = {}
+open_files = []
 for count, i in enumerate(file_list):
-    open_files['text_{}'.format(count)] = open('all_lyrics_' + str(count) + '.txt')
+    open_files.append(open('all_lyrics_' + str(count) + '.txt'))
+
+# Creates markov chain models for each of the open files
+markov_models = {}
+for count, i in enumerate(open_files):
+    markov_models['model_{}'.format(count)] = markovify.NewlineText(i, state_size=2)
 
 
 #######################################################################################################################
