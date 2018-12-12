@@ -3,6 +3,7 @@ import json
 import markovify
 import os
 import shutil
+import random
 
 ## LONG TERM
 # TODO replace lyricsgenius with Genius' API + web scraper
@@ -12,21 +13,62 @@ import shutil
 ## SHORT TERM
 # TODO Look into how to make file paths cleaner
 # TODO Need to make user input for whether they want a mixture of artists in one go, or just as features
+# TODO Make a nicer format for the printing of the song to the file
 
 # Generate folder to store temporary files
 if not os.path.exists('tmp_files'):
     os.makedirs('tmp_files')
 
-# Allowing user inputs to decide how many artists will be used when making the album
-num_artists = int(input("How many artists to combine?"))
+# Give the user the option of combining artists together or having an artist with features
+print("Song Creator - Version 1.0")
+print("There are two options for how you want to use the program:")
+print("1) Combine several artists lyrical style together to generate new mashups")
+print("2) Create new songs with one artist as the main and others as features")
+song_type = input("Do you want to choose option one or two? (Type 'one' or 'two' only)")
+
+# Adding error handling for if the user enters an invalid string
+while song_type != 'one' and song_type != 'two':
+    print(song_type)
+    print("Sorry, please type 'one' or 'two'")
+    song_type = input("Do you want to choose option 1 or 2? (Type 'one' or 'two' only)")
 
 # Initialising variables and lists
 artists = []
 
-# Adding user inputted artists to a list of size num_artists
-for i in range(num_artists):
-    artists.append(input("Who is artist " + str(i+1) + "?"))
+# Choosing the details if option 1 is chosen
+if song_type == 'one':
+    # Allowing the user to choose a single song or an album
+    album_or_song = input("Do you want to make a single song or an album? (Type 'album' or 'song'")
 
+    # Adding error handling for if the user enters an invalid string
+    while album_or_song != 'album' and album_or_song != 'song':
+        print("Sorry, please type 'album' or 'song'")
+        album_or_song = input("Do you want to make a single song or an album? (Type 'album' or 'song'")
+
+    # Allowing the user to choose the number of songs in the album
+    if album_or_song == "album":
+        album_size = int(input("How many tracks in the album?"))
+    else:
+        album_size = 1
+
+    # Allowing the user to choose whether they would like features in the song(s)
+    check_features = input("Would you like to add features? (Type 'yes' or 'no'")
+
+    # Adding error handling for if the user enters an invalid string
+    while check_features != 'yes' and check_features != 'no':
+        print("Sorry, please type 'yes' or 'no'")
+        check_features = input("Would you like to add features? (Type 'yes' or 'no'")
+
+    # Adding a variable for the number of features
+
+# Choosing the details if option 2 is chosen
+if song_type == 'two':
+    # Allowing user inputs to decide how many artists will be used when making the album
+    num_artists = int(input("How many artists to combine?"))
+
+    # Adding user inputted artists to a list of size num_artists
+    for i in range(num_artists):
+        artists.append(input("Who is artist " + str(i + 1) + "?"))
 
 # Choosing the number of songs to use when creating the new songs
 num_songs_used = int(input("How many songs should be used to create the new songs?"))
@@ -42,7 +84,7 @@ for i in range(len(artists)):
 # Saving the lyrics for the chosen artists and number of songs as a json file
 for key, value in artist_api.items():
     tmp_path = os.path.dirname(os.path.realpath(__file__)) + '/tmp_files/Lyrics_{}'.format(str(key).replace(' ', ''))
-    artist_api[key].save_lyrics(filename = tmp_path)
+    artist_api[key].save_lyrics(filename=tmp_path)
 
 # Loading the json into memory as a variable
 json_list = []
@@ -73,7 +115,7 @@ for count, i in enumerate(open_files):
 combined_model = markovify.combine(list(markov_models.values()))
 
 
-# ALBUM SECTION
+#ALBUM SECTION
 
 # Asks for inputs regarding the album
 album_name = input('What is the album name: ')
@@ -90,7 +132,6 @@ while album_bool:
         album_name = input('What is the album name: ')
 
 # Generates the songs with a specific template and adds them into the album
-# TODO Make a nicer format for the printing of the song to the file
 for i in range(num_songs_album):
     with open(album_name + "/" + 'Song_{}'.format(i+1) + '.txt', 'a') as the_file:
         the_file.write('VERSE ONE')
