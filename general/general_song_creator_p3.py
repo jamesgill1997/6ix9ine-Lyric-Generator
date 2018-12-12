@@ -38,12 +38,12 @@ artists = []
 # Choosing the details if option 1 is chosen
 if song_type == 'one':
     # Allowing the user to choose a single song or an album
-    album_or_song = input("Do you want to make a single song or an album? (Type 'album' or 'song'")
+    album_or_song = input("Do you want to make a single song or an album? (Type 'album' or 'song')")
 
     # Adding error handling for if the user enters an invalid string
     while album_or_song != 'album' and album_or_song != 'song':
         print("Sorry, please type 'album' or 'song'")
-        album_or_song = input("Do you want to make a single song or an album? (Type 'album' or 'song'")
+        album_or_song = input("Do you want to make a single song or an album? (Type 'album' or 'song')")
 
     # Allowing the user to choose the number of songs in the album
     if album_or_song == "album":
@@ -52,7 +52,7 @@ if song_type == 'one':
         album_size = 1
 
     # Allowing the user to choose whether they would like features in the song(s)
-    check_features = input("Would you like to add features? (Type 'yes' or 'no'")
+    check_features = input("Would you like to add features? (Type 'yes' or 'no')")
 
     # Adding error handling for if the user enters an invalid string
     while check_features != 'yes' and check_features != 'no':
@@ -61,6 +61,8 @@ if song_type == 'one':
 
     # Adding a variable for the number of features
     number_of_features = random.randint(0, album_size)
+    if number_of_features == 0:
+        number_of_features += 1
 
     # Adding the main artist to the artists list
     artists.append(input("Who is the main artist?"))
@@ -80,9 +82,13 @@ if song_type == 'two':
         artists.append(input("Who is artist " + str(i + 1) + "?"))
 
 # Choosing the number of songs to use when creating the new songs
-num_songs_used = int(input("How many songs should be used to create the new songs?"))
-
 dash = '-'*60
+print()
+print(dash)
+print()
+print("Song creator uses an artists previous work to generate new songs.")
+print("The more songs you choose to use, the more original the new songs will be!")
+num_songs_used = int(input("How many songs should be used to create the new songs?"))
 
 # Finding songs by the chosen artists using the genius api
 api = genius.Genius('uDarA9_cUEi8NgSiEliFR8Lu-TRl-sanYEfw1_fDNLRyejlgXDul2-QfYJZ4SvQF')
