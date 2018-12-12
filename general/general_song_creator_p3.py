@@ -22,8 +22,8 @@ if not os.path.exists('tmp_files'):
 # Give the user the option of combining artists together or having an artist with features
 print("Song Creator - Version 1.0")
 print("There are two options for how you want to use the program:")
-print("1) Combine several artists lyrical style together to generate new mashups")
-print("2) Create new songs with one artist as the main and others as features")
+print("1) Create new songs with one artist as the main and others as features")
+print("2) Combine several artists lyrical style together to generate new mashups")
 song_type = input("Do you want to choose option one or two? (Type 'one' or 'two' only)")
 
 # Adding error handling for if the user enters an invalid string
@@ -57,9 +57,18 @@ if song_type == 'one':
     # Adding error handling for if the user enters an invalid string
     while check_features != 'yes' and check_features != 'no':
         print("Sorry, please type 'yes' or 'no'")
-        check_features = input("Would you like to add features? (Type 'yes' or 'no'")
+        check_features = input("Would you like to add features? (Type 'yes' or 'no')")
 
     # Adding a variable for the number of features
+    number_of_features = random.randint(0, album_size)
+
+    # Adding the main artist to the artists list
+    artists.append(input("Who is the main artist?"))
+
+    # Adding the feature artists
+    print("You have " + str(number_of_features) + " features.")
+    for i in range(number_of_features):
+        artists.append(input("Who is featured artist " + str(i + 1) + "?"))
 
 # Choosing the details if option 2 is chosen
 if song_type == 'two':
