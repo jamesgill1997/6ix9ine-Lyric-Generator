@@ -34,6 +34,9 @@ while song_type != 'one' and song_type != 'two':
 
 # Initialising variables and lists
 artists = []
+num_songs_album = 0
+feature_songs = []
+number_of_features = 0
 
 # Choosing the details if option 1 is chosen
 if song_type == 'one':
@@ -47,9 +50,9 @@ if song_type == 'one':
 
     # Allowing the user to choose the number of songs in the album
     if album_or_song == "album":
-        album_size = int(input("How many tracks in the album?"))
+        num_songs_album = int(input("How many tracks in the album?"))
     else:
-        album_size = 1
+        num_songs_album = 1
 
     # Allowing the user to choose whether they would like features in the song(s)
     check_features = input("Would you like to add features? (Type 'yes' or 'no')")
@@ -60,7 +63,7 @@ if song_type == 'one':
         check_features = input("Would you like to add features? (Type 'yes' or 'no')")
 
     # Adding a variable for the number of features
-    number_of_features = random.randint(0, album_size)
+    number_of_features = random.randint(0, num_songs_album)
     if number_of_features == 0:
         number_of_features += 1
 
@@ -123,18 +126,24 @@ for count, i in enumerate(file_list):
 
 # Creates markov chain models for each of the open files
 markov_models = {}
+combined_model = {}
 for count, i in enumerate(open_files):
     markov_models['model_{}'.format(count)] = markovify.NewlineText(i, state_size=2)
 
-# Combines all markov chains
-combined_model = markovify.combine(list(markov_models.values()))
+# Combining the markov chains if option 2 is chosen
+if song_type == 'two':
+    # Combines all markov chains for option two
+    combined_model = markovify.combine(list(markov_models.values()))
 
+# ALBUM SECTION
 
-#ALBUM SECTION
-
-# Asks for inputs regarding the album
+# Asks for album name
 album_name = input('What is the album name: ')
-num_songs_album = int(input('How many songs in the album: '))
+
+# Choosing the number of tracks if option 2 is chosen
+if song_type == 'two':
+    num_songs_album = int(input('How many songs in the album: '))
+
 # Checks if the album already exists or not
 album_bool = True
 while album_bool:
@@ -146,6 +155,13 @@ while album_bool:
         print('This album already exists.')
         album_name = input('What is the album name: ')
 
+
+# Choosing which songs get features for option one
+if song_type == 'one':
+    while len(feature_songs) < number_of_features:
+        feature_songs.append(random.randrange(num_songs_album))
+        feature_songs = list(set(feature_songs))
+
 # Generates the songs with a specific template and adds them into the album
 for i in range(num_songs_album):
     with open(album_name + "/" + 'Song_{}'.format(i+1) + '.txt', 'a') as the_file:
@@ -153,18 +169,37 @@ for i in range(num_songs_album):
         the_file.write('\n')
         the_file.write(dash)
         the_file.write('\n')
-        for i in range(4):
-            the_file.write(combined_model.make_sentence(tries=150))
-            the_file.write('\n')
+        # Choosing the verse one lyrics if option 1 is chosen
+        if song_type == 'one':
+            for j in range(4):
+                the_file.write(markov_models.get('model_0').make_sentence(tries=150))
+        # Choosing the verse one lyrics if option 2 is chosen
+        if song_type == 'two':
+            for j in range(4):
+                the_file.write(combined_model.make_sentence(tries=150))
 
         the_file.write('\n')
+
+        the_file.write('\n')
+        # TODO: Include this in the below if statement, include the feature if the song contains it
         the_file.write('VERSE TWO')
         the_file.write('\n')
         the_file.write(dash)
         the_file.write('\n')
 
-        for i in range(8):
-            the_file.write(combined_model.make_sentence(tries=150))
+        # Choosing the verse two lyrics if option 1 is chosen
+        if song_type == 'one':
+            for j in range(4):
+                # Checks if the track will have a feature
+                if i in feature_songs:
+                    # Feature therefore make lyrics using a featured artist
+                    # TODO: Write this code, take the next unused featured artists lyrics
+                    # TODO: Maybe eliminate from list when done?
+
+        # Choosing the verse two lyrics if option 2 is chosen
+        if song_type == 'two':
+            for j in range(8):
+                the_file.write(combined_model.make_sentence(tries=150))
             the_file.write('\n')
 
         the_file.write('\n')
@@ -174,9 +209,14 @@ for i in range(num_songs_album):
         the_file.write(dash)
         the_file.write('\n')
 
-        for i in range(4):
+        # TODO: Sort verse three for both options
+
+        for j in range(4):
             the_file.write(combined_model.make_sentence(tries=150))
             the_file.write('\n')
 
-# Remove unnecessary files genereated
+# Remove unnecessary files generated
 shutil.rmtree(os.path.dirname(os.path.realpath(__file__)) + '/tmp_files/')
+
+# TODO: Finish the implementation of the second short term todo by doing the four above todo's
+# TODO: Check that this works for all possible cases
