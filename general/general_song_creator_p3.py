@@ -12,7 +12,6 @@ import random
 
 ## SHORT TERM
 # TODO Look into how to make file paths cleaner
-# TODO Need to make user input for whether they want a mixture of artists in one go, or just as features
 # TODO Make a nicer format for the printing of the song to the file
 
 # Generate folder to store temporary files
@@ -140,10 +139,6 @@ if song_type == 'two':
 # Asks for album name
 album_name = input('What is the album name: ')
 
-# Choosing the number of tracks if option 2 is chosen
-if song_type == 'two':
-    num_songs_album = int(input('How many songs in the album: '))
-
 # Checks if the album already exists or not
 album_bool = True
 while album_bool:
@@ -155,8 +150,12 @@ while album_bool:
         print('This album already exists.')
         album_name = input('What is the album name: ')
 
+# Choosing the number of tracks if option 2 is chosen
+if song_type == 'two':
+    num_songs_album = int(input('How many songs in the album: '))
 
 # Choosing which songs get features for option one
+num_features_used = 0
 if song_type == 'one':
     while len(feature_songs) < number_of_features:
         feature_songs.append(random.randrange(num_songs_album))
@@ -173,33 +172,49 @@ for i in range(num_songs_album):
         if song_type == 'one':
             for j in range(4):
                 the_file.write(markov_models.get('model_0').make_sentence(tries=150))
+                the_file.write('\n')
         # Choosing the verse one lyrics if option 2 is chosen
         if song_type == 'two':
             for j in range(4):
                 the_file.write(combined_model.make_sentence(tries=150))
+                the_file.write('\n')
 
         the_file.write('\n')
-
-        the_file.write('\n')
-        # TODO: Include this in the below if statement, include the feature if the song contains it
-        the_file.write('VERSE TWO')
-        the_file.write('\n')
-        the_file.write(dash)
         the_file.write('\n')
 
         # Choosing the verse two lyrics if option 1 is chosen
         if song_type == 'one':
-            for j in range(4):
-                # Checks if the track will have a feature
-                if i in feature_songs:
+            # Checks if the track will have a feature
+            if i in feature_songs:
+                num_features_used += 1
+                the_file.write('VERSE TWO (' + artists[num_features_used] + ')')
+                the_file.write('\n')
+                the_file.write(dash)
+                the_file.write('\n')
+                for j in range(8):
                     # Feature therefore make lyrics using a featured artist
-                    # TODO: Write this code, take the next unused featured artists lyrics
-                    # TODO: Maybe eliminate from list when done?
+                    the_file.write(markov_models.get('model_' + str(num_features_used)).make_sentence(tries=150))
+                    the_file.write('\n')
+            else:
+                the_file.write('VERSE TWO')
+                the_file.write('\n')
+                the_file.write(dash)
+                the_file.write('\n')
+                for j in range(8):
+                    the_file.write(markov_models.get('model_0').make_sentence(tries=150))
+                    the_file.write('\n')
+
+        the_file.write('\n')
 
         # Choosing the verse two lyrics if option 2 is chosen
         if song_type == 'two':
+            the_file.write('VERSE TWO')
+            the_file.write('\n')
+            the_file.write(dash)
+            the_file.write('\n')
             for j in range(8):
                 the_file.write(combined_model.make_sentence(tries=150))
+                the_file.write('\n')
             the_file.write('\n')
 
         the_file.write('\n')
@@ -209,14 +224,16 @@ for i in range(num_songs_album):
         the_file.write(dash)
         the_file.write('\n')
 
-        # TODO: Sort verse three for both options
-
-        for j in range(4):
-            the_file.write(combined_model.make_sentence(tries=150))
-            the_file.write('\n')
+        # Choosing the verse three lyrics if option 1 is chosen
+        if song_type == 'one':
+            for j in range(4):
+                the_file.write(markov_models.get('model_0').make_sentence(tries=150))
+                the_file.write('\n')
+        # Choosing the verse three lyrics if option 2 is chosen
+        if song_type == 'two':
+            for j in range(4):
+                the_file.write(combined_model.make_sentence(tries=150))
+                the_file.write('\n')
 
 # Remove unnecessary files generated
 shutil.rmtree(os.path.dirname(os.path.realpath(__file__)) + '/tmp_files/')
-
-# TODO: Finish the implementation of the second short term todo by doing the four above todo's
-# TODO: Check that this works for all possible cases
