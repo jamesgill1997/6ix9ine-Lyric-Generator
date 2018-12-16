@@ -62,7 +62,7 @@ if song_type == 'one':
         check_features = input("Would you like to add features? (Type 'yes' or 'no')")
 
     # Adding a variable for the number of features
-    number_of_features = random.randint(0, num_songs_album)
+    number_of_features = random.randint(0, num_songs_album // 3)
     if number_of_features == 0:
         number_of_features += 1
 
@@ -163,7 +163,15 @@ if song_type == 'one':
 
 # Generates the songs with a specific template and adds them into the album
 for i in range(num_songs_album):
-    with open(album_name + "/" + 'Song_{}'.format(i+1) + '.txt', 'a') as the_file:
+
+    if i in feature_songs:
+        num_features_used += 1
+        song_name = 'Song_{0}_ft_{1}'.format(i+1,artists[num_features_used]) + '.txt'
+    else:
+        song_name = 'Song_{}'.format(i+1) + '.txt'
+
+    # with open(album_name + "/" + 'Song_{}'.format(i+1) + '.txt', 'a') as the_file:
+    with open(album_name + '/' + song_name, 'a') as the_file:
         the_file.write('VERSE ONE')
         the_file.write('\n')
         the_file.write(dash)
@@ -186,14 +194,13 @@ for i in range(num_songs_album):
         if song_type == 'one':
             # Checks if the track will have a feature
             if i in feature_songs:
-                num_features_used += 1
                 the_file.write('VERSE TWO (' + artists[num_features_used] + ')')
                 the_file.write('\n')
                 the_file.write(dash)
                 the_file.write('\n')
                 for j in range(8):
                     # Feature therefore make lyrics using a featured artist
-                    the_file.write(markov_models.get('model_' + str(num_features_used)).make_sentence(tries=150))
+                    the_file.write(markov_models.get('model_' + str(num_features_used-1)).make_sentence(tries=150))
                     the_file.write('\n')
             else:
                 the_file.write('VERSE TWO')
